@@ -59,8 +59,20 @@ class Contact(models.Model):
 
 
 class Notes(models.Model):
+    """
+    The nurses can keep track of patient recovery progress.
+    """
     nurse = models.ForeignKey(Nurse, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, blank=True)
     note = models.TextField(max_length=10000)
     date_t = models.DateTimeField(auto_now_add=True)
+    # Priority to help doctor(s) how/when to respond.
+    HIGH = "HIGH"
+    NORMAL = "NORM"
+    LOW = "LOW"
+    PRIORITY_OPTIONS = [
+        (HIGH, "High"), (NORMAL, "Normal"), (LOW, "low")
+    ]
+    # Assign every note high priority by default.
+    priority = models.CharField(max_length=4, choices=PRIORITY_OPTIONS, default=HIGH)
