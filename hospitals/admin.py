@@ -5,5 +5,5 @@ from .models import *
 admin.site.register(Doctor)
 admin.site.register(Patient)
 admin.site.register(Appointment)
-admin.site.register(Notes)
+admin.site.register(Note)
 admin.site.register(Nurse)

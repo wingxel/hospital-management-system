@@ -58,7 +58,7 @@ class Contact(models.Model):
         return self.id
 
 
-class Notes(models.Model):
+class Note(models.Model):
     """
     The nurses can keep track of patient recovery progress.
     """
@@ -72,7 +72,7 @@ class Notes(models.Model):
     NORMAL = "NORM"
     LOW = "LOW"
     PRIORITY_OPTIONS = [
-        (HIGH, "High"), (NORMAL, "Normal"), (LOW, "low")
+        (HIGH, "High"), (NORMAL, "Normal"), (LOW, "Low")
     ]
     # Assign every note high priority by default.
     priority = models.CharField(max_length=4, choices=PRIORITY_OPTIONS, default=HIGH)
