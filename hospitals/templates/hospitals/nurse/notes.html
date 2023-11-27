@@ -8,7 +8,17 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8 mx-auto">
-                {% include "hospitals/nurse/includes/notes_table.html" with notes=notes_list %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% include "hospitals/nurse/includes/notes_table.html" with notes=notes_list %}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% include "hospitals/nurse/includes/pagination_nav.html" with p_obj=page_obj %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
