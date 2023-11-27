@@ -365,7 +365,7 @@ class NurseView(ListView):
     context_object_name = "patient_list"
 
 
-class AddNote(CreateView):
+class AddNoteView(CreateView):
     model = Note
     template_name = "hospitals/nurse/add_note.html"
     form_class = custom_forms.AddNote
