@@ -68,7 +68,7 @@ class Note(models.Model):
     """
     nurse = models.ForeignKey(User, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200, blank=True)
+    title = models.CharField(max_length=200)
     note = models.TextField(max_length=10000)
     date_t = models.DateTimeField(auto_now_add=True)
     # Priority to help doctor(s) how/when to respond.
