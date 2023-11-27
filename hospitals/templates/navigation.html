@@ -160,15 +160,27 @@
        <a class="nav-link" href="{% url 'contact' %}" style="color:white"><ion-icon style="margin-right:2px" name="people"></ion-icon> Contact</a>
      </li>
 
-     <li class="nav-item">
-       <a class="nav-link" href="{% url 'login' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i> Admin Login</a>
-     </li>
+    {% if request.user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'hospitals:nurse-index' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i>Patient List</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'hospitals:notes-list' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i>Notes List</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i>Logout</a>
+      </li>
+    {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i> Admin Login</a>
+      </li>
 
-     <li class="nav-item">
+      <li class="nav-item">
       <a class="nav-link" href="{% url 'login_nurse' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i> Nurse Login</a>
     </li>
+    {% endif %}
 
-   </ul>
+  </ul>
 
 </div>
 </nav>
