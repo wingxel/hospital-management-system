@@ -376,11 +376,10 @@ class AddNoteView(CreateView):
             "form": form
         })
     
-    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+    def form_valid(self, form, *args, **kwargs) -> HttpResponse:
         try:
             form.instance.nurse = self.request.user
-            id = self.request.POST.get("p_id")
-            form.instance.patient = Patient.objects.get(id=id)
+            form.instance.patient_id = self.kwargs["patient_id"]
         except Exception as error:
             print(f"Error : {str(error)}")
         return super(AddNoteView, self).form_valid(form)
