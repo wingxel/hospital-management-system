@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hospitals{% endblock %}</title>
+
+    <script src="{% static 'hospitals/js/ven/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'hospitals/js/ven/bootstrap.min.js' %}"></script>
+
+    {% block page_js %}{% endblock %}
+
+    <link rel="stylesheet" href="{% static 'hospitals/css/ven/bootstrap.min.css' %}">
+
+    {% block page_css %}{% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+</body>
+</html>
