@@ -76,3 +76,11 @@ class Note(models.Model):
     ]
     # Assign every note high priority by default.
     priority = models.CharField(max_length=4, choices=PRIORITY_OPTIONS, default=HIGH)
+    
+    def __str__(self) -> str:
+        """Get summary
+        Return: Small summary about a given note.
+        """
+        if len(self.title) > 0:
+            return f"{self.title[:70]}{'...' if len(self.title) > 70 else ''}"
+        return f"{self.note[:70]}{'...' if len(self.note) > 70 else ''}"
