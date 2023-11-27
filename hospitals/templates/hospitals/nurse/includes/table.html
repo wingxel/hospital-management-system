@@ -4,6 +4,7 @@
             <th>ID</th>
             <th>NAME</th>
             <th>ADD NOTE</th>
+            <th>NOTES</th>
         </tr>
     </thead>
     <tbody>
@@ -12,6 +13,7 @@
                 <td>{{ p.id }}</td>
                 <td>{{ p.name }}</td>
                 <td><a href="{% url  'hospitals:add-note' p.id %}">Add Note</a></td>
+                <td><a href="{% url 'hospitals:all-patient-notes' p.id %}">View Notes</a></td>
             </tr>
         {% endfor %}
     </tbody>
