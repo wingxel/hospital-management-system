@@ -358,6 +358,7 @@ def view_queries(request,pid):
     contact.save()
     return render(request,'view_queries.html', locals())
 
+# ------------------------------Added Code-------------------------------------------
 
 class NurseView(LoginRequiredMixin, ListView):
     """
