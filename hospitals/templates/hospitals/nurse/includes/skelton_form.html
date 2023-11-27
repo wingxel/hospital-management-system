@@ -3,7 +3,8 @@
         <form class="form-horizontal" method="POST" role="form" action="" enctype="multipart/form-data">
             {% csrf_token %}
             {% include "hospitals/nurse/includes/form_input.html" with form_element=form_e %}
-            <button type="submit" class="btn btn-primary">{{ action }}</button>
+            <button type="submit" class="btn btn-primary me-3">{{ action }}</button>
+            <a href="{% url 'hospitals:nurse-index' %}" class="btn btn-primary">CANCEL</a>
         </form>
     </div>
 </div>
