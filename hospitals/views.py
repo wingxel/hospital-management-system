@@ -359,6 +359,10 @@ def view_queries(request,pid):
 
 
 class NurseView(ListView):
+    """
+    Nurse index page with a list of patients
+    """
+    
     model = Patient
     paginate_by = 10
     template_name = "hospitals/nurse/index.html"
@@ -366,17 +370,29 @@ class NurseView(ListView):
 
 
 class AddNoteView(CreateView):
+    """
+    Add a specific patient note for the doctor to read.
+    """
+    
     model = Note
     template_name = "hospitals/nurse/add_note.html"
     form_class = custom_forms.AddNote
     
     def get(self, request: HttpRequest) -> HttpResponse:
+        """
+        Return: Add note page.
+        """
+        
         form = self.form_class(None)
         return render(request, self.template_name, {
             "form": form
         })
     
     def form_valid(self, form, *args, **kwargs) -> HttpResponse:
+        """
+        Add Nurse and Patient fields.
+        """
+        
         try:
             form.instance.nurse = self.request.user
             form.instance.patient_id = self.kwargs["patient_id"]
