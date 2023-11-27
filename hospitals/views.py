@@ -5,9 +5,10 @@ from django.contrib.auth import authenticate,logout,login
 from .models import *
 from datetime import date
 
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView
 from hospitals.libs import custom_forms
 from django.http import HttpRequest, HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -358,27 +359,29 @@ def view_queries(request,pid):
     return render(request,'view_queries.html', locals())
 
 
-class NurseView(ListView):
+class NurseView(LoginRequiredMixin, ListView):
     """
     Nurse index page with a list of patients
     """
     
     model = Patient
+    login_url = "/login_nurse"
     paginate_by = 10
     template_name = "hospitals/nurse/index.html"
     context_object_name = "patient_list"
 
 
-class AddNoteView(CreateView):
+class AddNoteView(LoginRequiredMixin, CreateView):
     """
     Add a specific patient note for the doctor to read.
     """
     
     model = Note
+    login_url = "/login_nurse"
     template_name = "hospitals/nurse/add_note.html"
     form_class = custom_forms.AddNote
     
-    def get(self, request: HttpRequest) -> HttpResponse:
+    def get(self, request: HttpRequest, patient_id: int) -> HttpResponse:
         """
         Return: Add note page.
         """
@@ -399,3 +402,12 @@ class AddNoteView(CreateView):
         except Exception as error:
             print(f"Error : {str(error)}")
         return super(AddNoteView, self).form_valid(form)
+
+
+class NoteDetails(LoginRequiredMixin, DetailView):
+    model = Note
+    login_url = "/login_nurse"
+    template_name = "hospitals/nurse/notes_details.html"
+    context_object_name = "note"
+    
+    
