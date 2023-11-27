@@ -1,4 +1,5 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
@@ -425,16 +426,22 @@ class NotesList(LoginRequiredMixin, ListView):
     paginate_by = 5
 
 
-class PatientNotes(LoginRequiredMixin, View):
+class PatientNotes(LoginRequiredMixin, ListView):
     """
     Get specific patient all notes
     """
     
     login_url = "/login_nurse"
+    paginate_by = 1
+    context_object_name = "notes"
+    template_name = "hospitals/nurse/patient_notes.html"
     
-    def get(self, request: HttpRequest, pk: int) -> HttpResponse:
-        patient = Patient.objects.get(id=pk)
-        notes = patient.note_set.all()
-        return render(request, "hospitals/nurse/patient_notes.html", {
-            "notes": notes
-        })
+    
+    def get_queryset(self) -> QuerySet[Any]:
+        """
+        Get all the notes by patient ID.
+        """
+        patient = Patient.objects.get(id=self.kwargs["pk"])
+        return patient.note_set.all()
+        
+        
