@@ -56,3 +56,11 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.id
+
+
+class Notes(models.Model):
+    nurse = models.ForeignKey(Nurse, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200, blank=True)
+    note = models.TextField(max_length=10000)
+    date_t = models.DateTimeField(auto_now_add=True)
