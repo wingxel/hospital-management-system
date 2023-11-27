@@ -11,7 +11,7 @@
             <tr>
                 <td>{{ p.id }}</td>
                 <td>{{ p.name }}</td>
-                <td><a href="{% url  'hospitals:add-note' %}">Add Note</a></td>
+                <td><a href="{% url  'hospitals:add-note' p.id %}">Add Note</a></td>
             </tr>
         {% endfor %}
     </tbody>
