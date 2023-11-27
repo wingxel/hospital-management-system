@@ -1,10 +1,13 @@
+from django.forms.models import BaseModelForm
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login
 from .models import *
 from datetime import date
 
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
+from hospitals.libs import custom_forms
+from django.http import HttpRequest, HttpResponse
 
 # Create your views here.
 
@@ -360,3 +363,24 @@ class NurseView(ListView):
     paginate_by = 10
     template_name = "hospitals/nurse/index.html"
     context_object_name = "patient_list"
+
+
+class AddNote(CreateView):
+    model = Note
+    template_name = "hospitals/nurse/add_note.html"
+    form_class = custom_forms.AddNote
+    
+    def get(self, request: HttpRequest) -> HttpResponse:
+        form = self.form_class(None)
+        return render(request, self.template_name, {
+            "form": form
+        })
+    
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        try:
+            form.instance.nurse = self.request.user
+            id = self.request.POST.get("p_id")
+            form.instance.patient = Patient.objects.get(id=id)
+        except Exception as error:
+            print(f"Error : {str(error)}")
+        return super(AddNote, self).form_valid(form)
