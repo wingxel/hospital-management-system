@@ -383,4 +383,4 @@ class AddNoteView(CreateView):
             form.instance.patient = Patient.objects.get(id=id)
         except Exception as error:
             print(f"Error : {str(error)}")
-        return super(AddNote, self).form_valid(form)
+        return super(AddNoteView, self).form_valid(form)
