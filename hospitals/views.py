@@ -1,3 +1,4 @@
+from typing import Any
 from django.forms.models import BaseModelForm
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
@@ -411,4 +412,15 @@ class NoteDetails(LoginRequiredMixin, DetailView):
     template_name = "hospitals/nurse/notes_details.html"
     context_object_name = "note"
     
+    
+class NotesList(LoginRequiredMixin, ListView):
+    """
+    Get a list of all notes.
+    """
+    
+    model = Note
+    login_url = "/login_nurse"
+    template_name = "hospitals/nurse/notes.html"
+    context_object_name = "notes_list"
+    paginate_by = 1
     
