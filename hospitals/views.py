@@ -368,7 +368,7 @@ class NurseView(LoginRequiredMixin, ListView):
     
     model = Patient
     login_url = "/login_nurse"
-    paginate_by = 10
+    paginate_by = 5
     template_name = "hospitals/nurse/index.html"
     context_object_name = "patient_list"
 
@@ -422,5 +422,5 @@ class NotesList(LoginRequiredMixin, ListView):
     login_url = "/login_nurse"
     template_name = "hospitals/nurse/notes.html"
     context_object_name = "notes_list"
-    paginate_by = 10
+    paginate_by = 5
     
