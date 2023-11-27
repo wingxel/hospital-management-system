@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate,logout,login
 from .models import *
 from datetime import date
 
+from django.views.generic import ListView
+
 # Create your views here.
 
 def About(request):
@@ -352,3 +354,9 @@ def view_queries(request,pid):
     contact.save()
     return render(request,'view_queries.html', locals())
 
+
+class NurseView(ListView):
+    model = Patient
+    paginate_by = 10
+    template_name = "hospitals/nurse/index.html"
+    context_object_name = "patient_list"
