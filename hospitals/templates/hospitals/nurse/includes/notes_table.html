@@ -1,0 +1,24 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>PATIENT</th>
+            <th>NURSE</th>
+            <th>DATE ADDED</th>
+            <th>PRIORITY</th>
+            <th>DETAILS</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for note in notes %}
+            <tr>
+                <td>{{ note.id }}</td>
+                <td>{{ note.patient }}</td>
+                <td>{{ note.nurse }}</td>
+                <td>{{ note.date_t }}</td>
+                <td>{{ note.priority }}</td>
+                <td><a href="{% url 'hospitals:note-details' note.id %}">Read</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
