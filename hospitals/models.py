@@ -60,6 +60,7 @@ class Contact(models.Model):
     def __str__(self):
         return self.id
 
+# -----------------------Added code-----------------------------------------------
 
 class Note(models.Model):
     """
@@ -89,5 +90,5 @@ class Note(models.Model):
         return f"{self.note[:70]}{'...' if len(self.note) > 70 else ''}"
     
     def get_absolute_url(self):
-        return reverse("hospitals:note-details", kwargs={"note_id": self.pk})
+        return reverse("hospitals:note-details", kwargs={"pk": self.pk})
     
