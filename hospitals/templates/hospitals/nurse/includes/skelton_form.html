@@ -1,0 +1,9 @@
+<div class="card">
+    <div class="card-body">
+        <form class="form-horizontal" method="POST" role="form" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include "hospitals/nurse/includes/form_input.html" with form_element=form_e %}
+            <button type="submit" class="btn btn-primary">{{ action }}</button>
+        </form>
+    </div>
+</div>
