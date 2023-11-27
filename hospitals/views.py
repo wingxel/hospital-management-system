@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate,logout,login
 from .models import *
 from datetime import date
 
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, View
 from hospitals.libs import custom_forms
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -423,4 +423,18 @@ class NotesList(LoginRequiredMixin, ListView):
     template_name = "hospitals/nurse/notes.html"
     context_object_name = "notes_list"
     paginate_by = 5
+
+
+class PatientNotes(LoginRequiredMixin, View):
+    """
+    Get specific patient all notes
+    """
     
+    login_url = "/login_nurse"
+    
+    def get(self, request: HttpRequest, pk: int) -> HttpResponse:
+        patient = Patient.objects.get(id=pk)
+        notes = patient.note_set.all()
+        return render(request, "hospitals/nurse/patient_notes.html", {
+            "notes": notes
+        })
