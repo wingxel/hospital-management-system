@@ -1,5 +1,8 @@
 from django.db import models
 
+from django.contrib.auth.models import User
+from django.urls import reverse
+
 # Create your models here.
 
 class Doctor(models.Model):
@@ -62,7 +65,7 @@ class Note(models.Model):
     """
     The nurses can keep track of patient recovery progress.
     """
-    nurse = models.ForeignKey(Nurse, on_delete=models.CASCADE)
+    nurse = models.ForeignKey(User, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, blank=True)
     note = models.TextField(max_length=10000)
@@ -84,3 +87,7 @@ class Note(models.Model):
         if len(self.title) > 0:
             return f"{self.title[:70]}{'...' if len(self.title) > 70 else ''}"
         return f"{self.note[:70]}{'...' if len(self.note) > 70 else ''}"
+    
+    def get_absolute_url(self):
+        return reverse("hospitals:note-details", kwargs={"note_id": self.pk})
+    
