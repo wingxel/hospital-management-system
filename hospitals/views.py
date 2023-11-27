@@ -422,5 +422,5 @@ class NotesList(LoginRequiredMixin, ListView):
     login_url = "/login_nurse"
     template_name = "hospitals/nurse/notes.html"
     context_object_name = "notes_list"
-    paginate_by = 1
+    paginate_by = 10
     
