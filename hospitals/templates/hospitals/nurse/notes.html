@@ -1,0 +1,17 @@
+{% extends "hospitals/base/base.html" %}
+
+{% block title %}Notes{% endblock %}
+
+{% block body %}
+
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 mx-auto">
+                {% include "hospitals/nurse/includes/notes_table.html" with notes=notes_list %}
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
