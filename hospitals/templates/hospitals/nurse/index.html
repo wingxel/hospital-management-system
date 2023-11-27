@@ -4,6 +4,14 @@
 
 {% block body %}
 
-
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 mx-auto">
+                {% include 'hospitals/nurse/includes/table.html' with p_list=patient_list %}
+            </div>
+        </div>
+    </div>
+</main>
 
 {% endblock %}
