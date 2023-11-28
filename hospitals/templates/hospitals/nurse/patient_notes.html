@@ -1,0 +1,41 @@
+{% extends "hospitals/base/base.html" %}
+
+{% block title %}All Notes{% endblock %}
+
+{% block body %}
+
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 mx-auto">
+                <div class="row">
+                    <a href="{% url 'hospitals:nurse-index' %}" style="text-align: end;" class="mb-5">Home</a>
+                    <div class="col-sm-12">
+                        {% if notes %}
+                            {% for note in notes %}
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 style="text-align: center;">{{ note.title }}</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>{{ note.note }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p style="text-align: center;">No notes found!</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% include "hospitals/nurse/includes/pagination_nav.html" with p_obj=page_obj %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

@@ -1,5 +1,8 @@
 from django.db import models
 
+from django.contrib.auth.models import User
+from django.urls import reverse
+
 # Create your models here.
 
 class Doctor(models.Model):
@@ -56,3 +59,36 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.id
+
+# -----------------------Added code-----------------------------------------------
+
+class Note(models.Model):
+    """
+    The nurses can keep track of patient recovery progress.
+    """
+    nurse = models.ForeignKey(User, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    note = models.TextField(max_length=10000)
+    date_t = models.DateTimeField(auto_now_add=True)
+    # Priority to help doctor(s) how/when to respond.
+    HIGH = "HIGH"
+    NORMAL = "NORM"
+    LOW = "LOW"
+    PRIORITY_OPTIONS = [
+        (HIGH, "High"), (NORMAL, "Normal"), (LOW, "Low")
+    ]
+    # Assign every note high priority by default.
+    priority = models.CharField(max_length=4, choices=PRIORITY_OPTIONS, default=HIGH)
+    
+    def __str__(self) -> str:
+        """Get summary
+        Return: Small summary about a given note.
+        """
+        if len(self.title) > 0:
+            return f"{self.title[:70]}{'...' if len(self.title) > 70 else ''}"
+        return f"{self.note[:70]}{'...' if len(self.note) > 70 else ''}"
+    
+    def get_absolute_url(self):
+        return reverse("hospitals:note-details", kwargs={"pk": self.pk})
+    

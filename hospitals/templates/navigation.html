@@ -6,18 +6,23 @@
   <link rel="icon" href="images/favicon.ico">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
   <link rel = stylesheet href = "//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-  <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
+
+  <script src="{% static 'hospitals/js/ven/jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static 'hospitals/js/ven/bootstrap.min.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'hospitals/css/ven/bootstrap.min.css' %}">
+
 <script>
-    $(document).ready( function () {
+  $(() => {
     $('#myTable').DataTable();
-} );
+  });
 </script>
 
 <style>
@@ -155,15 +160,27 @@
        <a class="nav-link" href="{% url 'contact' %}" style="color:white"><ion-icon style="margin-right:2px" name="people"></ion-icon> Contact</a>
      </li>
 
-     <li class="nav-item">
-       <a class="nav-link" href="{% url 'login' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i> Admin Login</a>
-     </li>
+    {% if request.user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'hospitals:nurse-index' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i>Patient List</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'hospitals:notes-list' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i>Notes List</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i>Logout</a>
+      </li>
+    {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i> Admin Login</a>
+      </li>
 
-     <li class="nav-item">
+      <li class="nav-item">
       <a class="nav-link" href="{% url 'login_nurse' %}" style="color:white"><i class="fas fa-sign-in-alt" style="margin-right:2px"></i> Nurse Login</a>
     </li>
+    {% endif %}
 
-   </ul>
+  </ul>
 
 </div>
 </nav>

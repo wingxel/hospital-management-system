@@ -1,8 +1,16 @@
+from typing import Any
+from django.db.models.query import QuerySet
+from django.forms.models import BaseModelForm
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login
 from .models import *
 from datetime import date
+
+from django.views.generic import ListView, CreateView, DetailView, View
+from hospitals.libs import custom_forms
+from django.http import HttpRequest, HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -352,3 +360,88 @@ def view_queries(request,pid):
     contact.save()
     return render(request,'view_queries.html', locals())
 
+# ------------------------------Added Code-------------------------------------------
+
+class NurseView(LoginRequiredMixin, ListView):
+    """
+    Nurse index page with a list of patients
+    """
+    
+    model = Patient
+    login_url = "/login_nurse"
+    paginate_by = 5
+    template_name = "hospitals/nurse/index.html"
+    context_object_name = "patient_list"
+
+
+class AddNoteView(LoginRequiredMixin, CreateView):
+    """
+    Add a specific patient note for the doctor to read.
+    """
+    
+    model = Note
+    login_url = "/login_nurse"
+    template_name = "hospitals/nurse/add_note.html"
+    form_class = custom_forms.AddNote
+    
+    def get(self, request: HttpRequest, patient_id: int) -> HttpResponse:
+        """
+        Return: Add note page.
+        """
+        
+        form = self.form_class(None)
+        return render(request, self.template_name, {
+            "form": form
+        })
+    
+    def form_valid(self, form, *args, **kwargs) -> HttpResponse:
+        """
+        Add Nurse and Patient fields.
+        """
+        
+        try:
+            form.instance.nurse = self.request.user
+            form.instance.patient_id = self.kwargs["patient_id"]
+        except Exception as error:
+            print(f"Error : {str(error)}")
+        return super(AddNoteView, self).form_valid(form)
+
+
+class NoteDetails(LoginRequiredMixin, DetailView):
+    model = Note
+    login_url = "/login_nurse"
+    template_name = "hospitals/nurse/notes_details.html"
+    context_object_name = "note"
+    
+    
+class NotesList(LoginRequiredMixin, ListView):
+    """
+    Get a list of all notes.
+    """
+    
+    model = Note
+    login_url = "/login_nurse"
+    template_name = "hospitals/nurse/notes.html"
+    context_object_name = "notes_list"
+    paginate_by = 5
+
+
+class PatientNotes(LoginRequiredMixin, ListView):
+    """
+    Get specific patient all notes
+    """
+    
+    login_url = "/login_nurse"
+    paginate_by = 1
+    context_object_name = "notes"
+    template_name = "hospitals/nurse/patient_notes.html"
+    
+    
+    def get_queryset(self) -> QuerySet[Any]:
+        """
+        Get all the notes by patient ID.
+        """
+        patient = Patient.objects.get(id=self.kwargs["pk"])
+        return patient.note_set.all()
+        
+        

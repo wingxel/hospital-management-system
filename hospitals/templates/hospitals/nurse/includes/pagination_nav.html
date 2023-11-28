@@ -1,0 +1,17 @@
+<div class="card shadow mb-3">
+    <div class="card-body text-center">
+        <span class="step-links">
+            {% if p_obj.has_previous %}
+                <a class="btn btn-outline-secondary" href="?page=1">&laquo; first</a>
+                <a class="btn btn-outline-secondary" href="?page={{ p_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+            <span class="current">
+                Page {{ p_obj.number }} of {{ p_obj.paginator.num_pages }}
+            </span>
+            {% if p_obj.has_next %}
+                <a class="btn btn-outline-secondary" href="?page={{ p_obj.next_page_number }}">next</a>
+                <a class="btn btn-outline-secondary" href="?page={{ p_obj.paginator.num_pages }}">last &laquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
