@@ -8,6 +8,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8 mx-auto">
+                <table class="table">
+                    <tr>
+                        <td><h3>List Of Patients</h3></td>
+                        <td><a href="{% url 'index' %}">Home</a></td>
+                    </tr>
+                </table>
+                <hr>
                 <div class="row">
                     <div class="col-sm-12">
                         {% include "hospitals/nurse/includes/table.html" with p_list=patient_list %}
