@@ -51,6 +51,7 @@ urlpatterns = [
     path('delete_clinical_officer/<int:officer_id>', Delete_Clinical_Officer, name = 'delete_clinical_officer'),
 
     path('login_nurse', nurse_login, name = 'login_nurse'),
+    path('nurse_home', nurse_home, name = 'nurse_home'),
     
     path("hospitals/", include("hospitals.urls"))
 ]
