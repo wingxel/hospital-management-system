@@ -80,14 +80,14 @@ def nurse_login(request):
     return render(request,'login_nurse.html', locals())
 
 
-# def nurse_home(request):
-#     if not request.user.is_staff:
-#         return redirect('login_nurse')
-#     pc = Patient.objects.all().count()
-#     ac = Appointment.objects.all().count()
+def nurse_home(request):
+    if not request.user.is_staff:
+        return redirect('login_nurse')
+    pc = Patient.objects.all().count()
+    ac = Appointment.objects.all().count()
 
-#     d = {'pc':pc, 'ac':ac}
-#     return render(request, 'nurse_home.html', d)  
+    d = {'pc':pc, 'ac':ac}
+    return render(request, 'nurse_home.html', d)  
 
 
 
@@ -368,7 +368,7 @@ class NurseView(LoginRequiredMixin, ListView):
     """
     
     model = Patient
-    login_url = "/login_nurse"
+    login_url = "/login_nurse" 
     paginate_by = 5
     template_name = "hospitals/nurse/index.html"
     context_object_name = "patient_list"
